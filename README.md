@@ -1,1 +1,1 @@
-# CS221-Project
+# CS221 Project: Reinforcement Learning for Bipedal Robots
