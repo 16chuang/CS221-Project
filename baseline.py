@@ -6,7 +6,7 @@ import numpy as np
 import random
 
 from policy import RandomPolicy, QLearning_NaiveDiscretize, \
- QLearning_SmartDiscretize, QLearning_FunctionApprox, \
+ QLearning_SmartDiscretize, QLearning_FunctionApprox, QLearning_FunctionApprox2, \
  ActorCritic, ActorCriticExperienceReplay
 
 import matplotlib
@@ -77,11 +77,9 @@ def run(policy):
 		total_reward = 0
 
 		while not done and num_timesteps <= MAX_EP_STEPS:
-			# env.render()
-			# Render the last episode
-			# if (episode == MAX_EPISODES - 1):
-			# if total_reward > 700:
-			# 	env.render()
+			# if (episode > 600):
+			# if total_reward > 1000:
+				# env.render()
 
 			# Select action
 			action = policy.get_action(state, float(episode)/MAX_EPISODES)
@@ -97,18 +95,11 @@ def run(policy):
 			state = result_state
 			total_reward += reward
 			num_timesteps += 1
-			# print('state', state)
-			# print('action', action)
-			# print('reward', reward)
-			# print('info', info)
 
 		# avg_reward = 0.9 * avg_reward + 0.1 * total_reward if avg_reward != None else total_reward
 		# print('num timesteps: {}, reward: {}, avg_reward: {}').format(num_timesteps, total_reward, avg_reward)
 		print('episode: {}, num timesteps: {}, reward: {}').format(episode, num_timesteps, total_reward)
 		times_fallen = times_fallen + 1 if done else times_fallen
-		# avg_rewards.append(avg_reward)
-		# rewards.append(total_reward)
-		# timesteps.append(num_timesteps)
 		if WRITE_TO_FILE:
 			with open(filename, "a+") as output_file:
 				output_file.write(('{},{},{}\n').format(num_timesteps, total_reward, done))
@@ -121,4 +112,4 @@ def run(policy):
 
 	print('fell {}%').format(float(times_fallen) / MAX_EPISODES * 100)
 
-run(ActorCritic(env))
+run(QLearning_FunctionApprox2(env))
